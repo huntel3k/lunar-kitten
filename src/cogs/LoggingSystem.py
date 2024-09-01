@@ -40,9 +40,8 @@ class Logging(commands.Cog):
         log_channel = disnake.utils.get(after.guild.text_channels, name='nasze-boty')
 
         if log_channel is None:
-            return  # Log channel not found
+            return
 
-        # Create a hoverable timestamp using the Unix timestamp
         timestamp = int(after.created_at.timestamp())
         formatted_time = f"<t:{timestamp}:F>"
 
@@ -63,9 +62,8 @@ class Logging(commands.Cog):
         log_channel = disnake.utils.get(channel.guild.text_channels, name='nasze-boty')
 
         if log_channel is None:
-            return  # Log channel not found
+            return
 
-        # Create a hoverable timestamp using the Unix timestamp
         timestamp = int(channel.created_at.timestamp())
         formatted_time = f"<t:{timestamp}:F>"
 
@@ -85,9 +83,8 @@ class Logging(commands.Cog):
         log_channel = disnake.utils.get(channel.guild.text_channels, name='nasze-boty')
 
         if log_channel is None:
-            return  # Log channel not found
+            return
 
-        # Create a hoverable timestamp using the Unix timestamp
         timestamp = int(channel.created_at.timestamp())
         formatted_time = f"<t:{timestamp}:F>"
 
@@ -106,7 +103,7 @@ class Logging(commands.Cog):
         log_channel = disnake.utils.get(guild.text_channels, name='nasze-boty')
 
         if log_channel is None:
-            return  # Log channel not found
+            return
 
         # Retrieve audit logs to find who banned the user, when, and the reason
         async for entry in guild.audit_logs(action=disnake.AuditLogAction.ban, limit=1):
@@ -131,7 +128,6 @@ class Logging(commands.Cog):
         )
         ban_embed.set_footer(text=f"User ID: {user.id}")
 
-        # Send the embed to the log channel
         await log_channel.send(embed=ban_embed)
 
     @commands.Cog.listener()
@@ -139,7 +135,7 @@ class Logging(commands.Cog):
         log_channel = disnake.utils.get(guild.text_channels, name='nasze-boty')
 
         if log_channel is None:
-            return  # Log channel not found
+            return
 
         # Retrieve audit logs to find who unbanned the user and when
         async for entry in guild.audit_logs(action=disnake.AuditLogAction.unban, limit=1):
@@ -164,7 +160,6 @@ class Logging(commands.Cog):
         )
         unban_embed.set_footer(text=f"User ID: {user.id}")
 
-        # Send the embed to the log channel
         await log_channel.send(embed=unban_embed)
 
     @commands.Cog.listener()
@@ -172,7 +167,7 @@ class Logging(commands.Cog):
         log_channel = disnake.utils.get(member.guild.text_channels, name='nasze-boty')
 
         if log_channel is None:
-            return  # Log channel not found
+            return
 
         # Create an embed to log the member joining
         welcome_embed = disnake.Embed(
@@ -188,7 +183,7 @@ class Logging(commands.Cog):
         log_channel = disnake.utils.get(member.guild.text_channels, name='nasze-boty')
 
         if log_channel is None:
-            return  # Log channel not found
+            return
 
         # Create an embed to log the member leaving
         goodbye_embed = disnake.Embed(
