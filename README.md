@@ -18,6 +18,7 @@ winget install Python.Python.3.12
 ### Install required dependencies:
 ```
 pip install disnake
+pip install python-dotenv
 ```
 
 
