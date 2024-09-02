@@ -26,7 +26,7 @@ pip install disnake
 First check out the bot repo in your directory using git
 
 ```
-git clone git@github.com:huntel3k/lunar-kitten.git
+git clone https://github.com/huntel3k/lunar-kitten.git
 cd lunar-kitten
 ```
 ### ⚠️ Make sure that you have created your own *token.env* file in src folder !
