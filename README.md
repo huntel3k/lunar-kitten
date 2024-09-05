@@ -32,8 +32,14 @@ cd lunar-kitten
 ```
 ### ⚠️ Make sure that you have created your own *token.env* file in src folder !
 
+```
+TOKEN=YOUR_TOKEN_HERE
+```
+
 then use **main.py** located in **src folder** to start bot
 
 ```
 python3 main.py
 ```
+
+![kitty](kitty.svg)
