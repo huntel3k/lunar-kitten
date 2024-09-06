@@ -1,5 +1,4 @@
 import os
-
 import disnake
 from disnake.ext import commands
 from dotenv import load_dotenv
@@ -15,14 +14,12 @@ bot = commands.InteractionBot(intents=intents, activity=activity, status=disnake
 
 @bot.event
 async def on_ready():
-    print("}------✅------{")
-    print("}  bocik zyje  {")
-    print("}------✅------{")
+    print("}---------✅---------{")
+    print("}  Bot jest Online ! {")
+    print("}---------✅---------{")
 
 
-bot.load_extension("cogs.moderation")
-bot.load_extension("cogs.Utilities")
-bot.load_extension("cogs.LoggingSystem")
+bot.load_extensions("cogs")
 
 token = os.getenv('TOKEN')
 bot.run(token)

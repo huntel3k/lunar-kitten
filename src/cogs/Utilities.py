@@ -1,19 +1,18 @@
 import random
-
 import disnake
 from disnake.ext import commands
 
 
 class Fun(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     @commands.slash_command(name="fun")
-    async def fun(self, inter):
+    async def fun(self, inter: disnake.ApplicationCommandInteraction):
         pass
 
     @fun.sub_command(name="cats", description="Pokazuje losowe zdjecia kotow!")
-    async def cat(self, inter):
+    async def cat(self, inter: disnake.ApplicationCommandInteraction):
         catgifs = ["https://media.tenor.com/QUSMUwP4DX4AAAAi/plink-cat-blink.gif",
                    "https://media1.tenor.com/m/_t0sHU9OPmsAAAAC/-.gif",
                    "https://media1.tenor.com/m/MFt1WVDeUhUAAAAd/smol-illegally-smol-cat.gif",
@@ -35,7 +34,7 @@ class Tools(commands.Cog):
         self.bot = bot
 
     @commands.slash_command(name="about")
-    async def about(self, inter):
+    async def about(self, inter: disnake.ApplicationCommandInteraction):
         pass
 
     @about.sub_command(name="bot", description="Informacje o bocie!")
@@ -49,7 +48,7 @@ class Tools(commands.Cog):
         await inter.response.send_message(embed=aboutbot)
 
     @about.sub_command(name="user", description="Pokazuje informacje o danym użytkowniku !")
-    async def user(self, inter, user: disnake.Member):
+    async def user(self, inter: disnake.ApplicationCommandInteraction, user: disnake.Member):
         aboutuser = disnake.Embed(title=f"Informacje o @{user.name}",
                                   color=disnake.Color.dark_blue(),
                                   timestamp=disnake.utils.utcnow())
@@ -66,8 +65,8 @@ class Tools(commands.Cog):
         activity = user.activity  # Get the user's current activity
 
         if activity is not None:
-            activity_type = activity.type.name.capitalize()  # Get the activity type as a string and capitalize it
-            activity_name = activity.name  # Get the name of the activity
+            activity_type = activity.type.name.capitalize()        # Get the activity type as a string and capitalize it
+            activity_name = activity.name                               # Get the name of the activity
             formatted_activity = f"{activity_type}: *{activity_name}*"  # Format it nicely
         else:
             formatted_activity = "Użytkownik nic nie robi"
@@ -85,7 +84,7 @@ class Tools(commands.Cog):
         await inter.response.send_message(embed=aboutuser)
 
     @about.sub_command(name="server", description="Wyświetla informacje o serwerze !")
-    async def server(self, inter):
+    async def server(self, inter: disnake.ApplicationCommandInteraction):
 
         timestamp_created = int(inter.guild.created_at.timestamp())
         formatted_time_created = f"<t:{timestamp_created}:F>"

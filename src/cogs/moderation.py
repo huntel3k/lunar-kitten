@@ -11,14 +11,14 @@ class Moderation(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
 
-    @commands.slash_command(name='moderation')
-    async def moderation(self, inter):
+    @commands.slash_command(name="moderation")
+    async def moderation(self, inter: disnake.ApplicationCommandInteraction):
         pass
 
-    @moderation.sub_command(name="ban",
-                            description="Banuje użytkownika z serwera!")
+    @moderation.sub_command(name="ban", description="Banuje użytkownika z serwera!")
     @commands.has_permissions(ban_members=True)
-    async def ban(self, inter, user: disnake.Member, reason: str = "No reason provided."):
+    async def ban(self, inter: disnake.ApplicationCommandInteraction,
+                  user: disnake.Member, reason: str = "No reason provided."):
         bansuccess = disnake.Embed(title="✅ Sukces",
                                    description=f"`Pomyślnie zbanowano użytkownika:` {user.mention}\n "
                                                f"`Powod:` *{reason}*",
@@ -44,7 +44,7 @@ class Moderation(commands.Cog):
             await inter.response.send_message(embed=authorbanfailure)
 
     @ban.error
-    async def moderation_error(self, inter, error):
+    async def moderation_error(self, inter: disnake.ApplicationCommandInteraction, error):
         if isinstance(error, commands.MissingPermissions):
             missingpermsforbaning = disnake.Embed(title="⚠️ Brak permisji !",
                                                   description=f"`{error}`",
@@ -59,10 +59,10 @@ class Moderation(commands.Cog):
                                          timestamp=disnake.utils.utcnow())
             await inter.response.send_message(embed=usernotfound)
 
-    @moderation.sub_command(name="kick",
-                            description="Wyrzuca użytkownika z serwera!")
+    @moderation.sub_command(name="kick", description="Wyrzuca użytkownika z serwera!")
     @commands.has_permissions(kick_members=True)
-    async def kick(self, inter, user: disnake.Member, reason: str = "No reason provided."):
+    async def kick(self, inter: disnake.ApplicationCommandInteraction,
+                   user: disnake.Member, reason: str = "No reason provided."):
         kicksuccess = disnake.Embed(title="✅ Sukces",
                                     description=f"`Pomyślnie wyrzucono:` {user.mention}\n "
                                                 f"`Powod:` *{reason}*",
@@ -89,7 +89,7 @@ class Moderation(commands.Cog):
             await inter.response.send_message(embed=authorkickfailure)
 
     @kick.error
-    async def kick_error(self, inter, error):
+    async def kick_error(self, inter: disnake.ApplicationCommandInteraction, error):
         if isinstance(error, commands.MissingPermissions):
             missingpermsforkicking = disnake.Embed(title="⚠️ Brak permisji !",
                                                    description=f"`{error}`",
@@ -97,8 +97,7 @@ class Moderation(commands.Cog):
                                                    timestamp=disnake.utils.utcnow())
             await inter.response.send_message(embed=missingpermsforkicking)
 
-    @moderation.sub_command(name="unban",
-                            description="Odbanowywuje danego użytkownika !")
+    @moderation.sub_command(name="unban", description="Odbanowywuje danego użytkownika !")
     @commands.has_permissions(ban_members=True)
     async def unban(self, inter: disnake.ApplicationCommandInteraction, user: disnake.User, reason: str = "."):
         successunban = disnake.Embed(title="✅ Sukces",
@@ -110,7 +109,7 @@ class Moderation(commands.Cog):
         await inter.response.send_message(embed=successunban)
 
     @unban.error
-    async def unban_error(self, inter, error):
+    async def unban_error(self, inter: disnake.ApplicationCommandInteraction, error):
         if isinstance(error, commands.MissingPermissions):
             nopermsunban = disnake.Embed(title="⚠️ Błąd",
                                          description=f"'{error}'",
@@ -118,8 +117,7 @@ class Moderation(commands.Cog):
                                          timestamp=disnake.utils.utcnow())
             await inter.response.send_message(embed=nopermsunban)
 
-    @moderation.sub_command(name="banned",
-                            description="Lista zbanowanych użytkowników")
+    @moderation.sub_command(name="list", description="Lista zbanowanych użytkowników")
     @commands.has_permissions(ban_members=True)
     async def banned_users(self, inter: disnake.ApplicationCommandInteraction):
         bans = await inter.guild.bans(limit=None).flatten()
@@ -140,8 +138,7 @@ class Moderation(commands.Cog):
                                                 timestamp=disnake.utils.utcnow())
             await inter.response.send_message(embed=missingbanlistperms)
 
-    @moderation.sub_command(name="clear",
-                            description="Czyści podaną ilość wiadomości")
+    @moderation.sub_command(name="clear", description="Czyści podaną ilość wiadomości")
     @commands.has_permissions(manage_messages=True)
     async def clear(self, inter: disnake.ApplicationCommandInteraction, amount):
         successclearedmessages = disnake.Embed(title="✅ Sukces",
@@ -153,7 +150,7 @@ class Moderation(commands.Cog):
         await inter.response.send_message(embed=successclearedmessages)
 
     @clear.error
-    async def clear_error(self, inter, error):
+    async def clear_error(self, inter: disnake.ApplicationCommandInteraction, error):
         if isinstance(error, commands.MissingPermissions):
             missingclearperms = disnake.Embed(title="⚠️ Błąd permisji",
                                               description=f"`{error}`",
@@ -184,7 +181,7 @@ class Moderation(commands.Cog):
             await inter.response.send_message(embed=usermuteerror)
 
     @mute.error
-    async def mute_error(self, inter, error):
+    async def mute_error(self, inter: disnake.ApplicationCommandInteraction, error):
         if isinstance(error, commands.MissingPermissions):
             missingmuteperms = disnake.Embed(title="⚠️ Błąd permisji",
                                              description=f"`{error}`",
@@ -204,7 +201,7 @@ class Moderation(commands.Cog):
             await inter.response.send_message(f"⚠️ Wystąpił nieoczekiwany błąd: {str(e)}", ephemeral=True)
 
     @unmute.error
-    async def unmute_error(self, inter, error):
+    async def unmute_error(self, inter: disnake.ApplicationCommandInteraction, error):
         if isinstance(error, commands.MissingPermissions):
             missingmuteperms = disnake.Embed(title="⚠️ Błąd permisji",
                                              description=f"`{error}`",
