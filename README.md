@@ -42,4 +42,7 @@ then use **main.py** located in **src folder** to start bot
 python3 main.py
 ```
 
+#### ⚒️ Commands
+U can find them on my [website](https://huntel3k.github.io/website/pages/lunar-kitten.html)
+
 ![kitty](kitty.svg)
