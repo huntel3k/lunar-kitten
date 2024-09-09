@@ -16,7 +16,6 @@ class Moderation(commands.Cog):
         pass
 
     @moderation.sub_command(name="ban", description="Banuje użytkownika z serwera!")
-    @commands.has_permissions(ban_members=True)
     async def ban(self, inter: disnake.ApplicationCommandInteraction,
                   user: disnake.Member, reason: str = "No reason provided."):
         bansuccess = disnake.Embed(title="✅ Sukces",
@@ -60,7 +59,6 @@ class Moderation(commands.Cog):
             await inter.response.send_message(embed=usernotfound)
 
     @moderation.sub_command(name="kick", description="Wyrzuca użytkownika z serwera!")
-    @commands.has_permissions(kick_members=True)
     async def kick(self, inter: disnake.ApplicationCommandInteraction,
                    user: disnake.Member, reason: str = "No reason provided."):
         kicksuccess = disnake.Embed(title="✅ Sukces",
@@ -98,7 +96,6 @@ class Moderation(commands.Cog):
             await inter.response.send_message(embed=missingpermsforkicking)
 
     @moderation.sub_command(name="unban", description="Odbanowywuje danego użytkownika !")
-    @commands.has_permissions(ban_members=True)
     async def unban(self, inter: disnake.ApplicationCommandInteraction, user: disnake.User, reason: str = "."):
         successunban = disnake.Embed(title="✅ Sukces",
                                      description=f"Pomyślnie odbanowano {user.name}",
@@ -118,7 +115,6 @@ class Moderation(commands.Cog):
             await inter.response.send_message(embed=nopermsunban)
 
     @moderation.sub_command(name="list", description="Lista zbanowanych użytkowników")
-    @commands.has_permissions(ban_members=True)
     async def banned_users(self, inter: disnake.ApplicationCommandInteraction):
         bans = await inter.guild.bans(limit=None).flatten()
         formatted_bans = [f"**Zbanowany użytkownik:** `{ban.user}` \n *Powód:* {ban.reason}" for ban in bans]
@@ -139,7 +135,6 @@ class Moderation(commands.Cog):
             await inter.response.send_message(embed=missingbanlistperms)
 
     @moderation.sub_command(name="clear", description="Czyści podaną ilość wiadomości")
-    @commands.has_permissions(manage_messages=True)
     async def clear(self, inter: disnake.ApplicationCommandInteraction, amount):
         successclearedmessages = disnake.Embed(title="✅ Sukces",
                                                description=f"Wyczyszczono `{amount}` wiad.",
@@ -161,7 +156,6 @@ class Moderation(commands.Cog):
     # Mute Command & Unmute using Discord's Built-In Timeout (gpt generated)
 
     @moderation.sub_command(name="mute", description="Wycisza użytkownika na określony czas.")
-    @commands.has_permissions(moderate_members=True)
     async def mute(self, inter: disnake.ApplicationCommandInteraction, user: disnake.Member, time: str):
         mute_time_seconds = convert_time_to_seconds(time)
         if not mute_time_seconds:
@@ -190,7 +184,6 @@ class Moderation(commands.Cog):
             await inter.response.send_message(embed=missingmuteperms)
 
     @moderation.sub_command(name="unmute", description="Odcisza użytkownika.")
-    @commands.has_permissions(moderate_members=True)
     async def unmute(self, inter: disnake.ApplicationCommandInteraction, user: disnake.Member):
         try:
             await user.timeout(duration=None)

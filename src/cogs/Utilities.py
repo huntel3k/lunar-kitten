@@ -1,4 +1,5 @@
 import random
+
 import disnake
 from disnake.ext import commands
 
@@ -39,12 +40,25 @@ class Tools(commands.Cog):
 
     @about.sub_command(name="bot", description="Informacje o bocie!")
     async def bot(self, inter: disnake.ApplicationCommandInteraction):
-        aboutbot = disnake.Embed(title=f"🛠️ -| @lunar kitten |- 🛠️",
-                                 description=f"🏓 Ping bota wynosi: `{round(self.bot.latency * 1000)} ms` ⏱️",
+
+        server_count = len(self.bot.guilds)
+        channel_count = sum(len(guild.channels) for guild in self.bot.guilds)
+        total_members = sum(guild.member_count for guild in self.bot.guilds)
+
+        aboutbot = disnake.Embed(title=f"🛠️  @lunar kitten 🛠️",
+                                 description=f"🏓 Opóźnienie: `{round(self.bot.latency * 1000)} ms` ⏱️",
                                  color=disnake.Color.dark_blue(),
                                  timestamp=disnake.utils.utcnow())
         aboutbot.set_thumbnail(
             url="https://cdn.discordapp.com/avatars/1194562644905050133/bc9190c57fdef38ed690c16fa9d0384e.png?size=1024")
+        aboutbot.add_field(name="Liczba serwerów", value=f"{server_count} serwery", inline=False)
+        aboutbot.add_field(name="Liczba kanałów", value=f"{channel_count} kanałów", inline=False)
+        aboutbot.add_field(name="Liczba członków", value=f"{total_members} członków", inline=False)
+
+        aboutbot.add_field(name="Projekt",
+                           value=f"[Strona](https://huntel3k.github.io/website/pages/lunar-kitten.html)", inline=False)
+        aboutbot.set_footer(text="Developed by @huntel3k")
+
         await inter.response.send_message(embed=aboutbot)
 
     @about.sub_command(name="user", description="Pokazuje informacje o danym użytkowniku !")
@@ -65,8 +79,8 @@ class Tools(commands.Cog):
         activity = user.activity  # Get the user's current activity
 
         if activity is not None:
-            activity_type = activity.type.name.capitalize()        # Get the activity type as a string and capitalize it
-            activity_name = activity.name                               # Get the name of the activity
+            activity_type = activity.type.name.capitalize()  # Get the activity type as a string and capitalize it
+            activity_name = activity.name  # Get the name of the activity
             formatted_activity = f"{activity_type}: *{activity_name}*"  # Format it nicely
         else:
             formatted_activity = "Użytkownik nic nie robi"
